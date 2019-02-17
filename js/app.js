@@ -2,6 +2,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const qwerty = document.getElementById('qwerty');
   const phrase = document.getElementById('phrase');
   const list = document.querySelector('#phrase ul');
+  let tries = document.querySelectorAll('.tries');
   const phrases = [
   'impossible is for the unwilling',
   'take the risk or lose the chance',
@@ -76,7 +77,12 @@ document.addEventListener("DOMContentLoaded", () => {
       letterFound.setAttribute("disabled", true);
     }
     // pass the clicked letter
-    checkLetter(letterFound);
+    if(checkLetter(letterFound) === null) {
+      // increase missed by 1
+      missed += 1;
+      // change live hearts into lost hearts
+      tries[missed - 1].querySelector('img').setAttribute('src','images/lostHeart.png');
+    }
   });
 
   function checkLetter(pickedKey) {
