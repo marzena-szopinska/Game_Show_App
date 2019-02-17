@@ -4,11 +4,11 @@ document.addEventListener("DOMContentLoaded", () => {
   const list = document.querySelector('#phrase ul');
   let tries = document.querySelectorAll('.tries');
   const phrases = [
-  'impossible is for the unwilling',
-  'take the risk or lose the chance',
-  'focus on the good',
-  'enjoy today',
-  'never stop dreaming'
+  'Impossible is for the unwilling',
+  'Take the risk or lose the chance',
+  'Focus on the good',
+  'Enjoy today',
+  'Never stop dreaming'
   ];
   const start = document.getElementById('overlay');
   const win =  document.getElementById('overlay-win');
@@ -103,7 +103,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // loop over the letters and check if they match the letter in the button the player has chosen
     for(let i = 0; i < letters.length; i += 1) {
       // if there’s a match
-      if(pickedKey.textContent === letters[i].textContent){
+      if(pickedKey.textContent === letters[i].textContent.toLowerCase()){
         // add the “show” class to the list item containing that letter
         // and store the matching letter inside of a variable, and return that letter
         letters[i].className += " " + "show";
