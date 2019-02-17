@@ -13,22 +13,27 @@ document.addEventListener("DOMContentLoaded", () => {
   const start = document.getElementById('overlay');
   const win =  document.getElementById('overlay-win');
   const lost =  document.getElementById('overlay-lost');
+  const screenButtons = document.querySelectorAll('.btn__reset');
   // keeps track of the number of guesses the player has missed
   let missed = 0;
 
-  // START OVERLAY
-  start.addEventListener('click', (e) => {
-    if(e.target.tagName === 'A'){
-        // hide the screen overlay
-        start.style.display = 'none';
-    }
+  // OVERLAY
+  screenButtons.forEach((element) => {
+    element.addEventListener("click", (e) => {
+      if(e.target.tagName === 'A'){
+          // hide the screen overlay
+          element.parentNode.style.display = 'none';
+      }
+    });
   });
 
-  start.addEventListener('mouseover', (e) => {
-    if(e.target.tagName === 'A'){
-        // change the cursor into pointer
-        e.target.style.cursor = 'pointer';
-    }
+  screenButtons.forEach((element) => {
+    element.addEventListener("mouseover", (e) => {
+      if(e.target.tagName === 'A'){
+          // change the cursor into pointer
+          e.target.style.cursor = 'pointer';
+      }
+    });
   });
   // function that randomly choosees a phrase from the phrases array and split that phrase into a new array of characters.
   // The function returns the new character array.
@@ -64,7 +69,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  const phraseArray = getRandomPhraseAsArray(phrases);
+  let phraseArray = getRandomPhraseAsArray(phrases);
   addPhraseToDisplay(phraseArray);
 
   qwerty.addEventListener('click', (e) => {
@@ -113,16 +118,36 @@ document.addEventListener("DOMContentLoaded", () => {
   function checkWin() {
     const numOfShow = document.querySelectorAll('.show');
     const numOfLetter = document.querySelectorAll('.letter');
-
-    console.log(numOfShow);
-    console.log(numOfLetter);
+    //console.log(numOfShow);
+    //console.log(numOfLetter);
     // check if the number of letters with class “show” is equal to the number of letters with class “letters”
     if(numOfShow.length === numOfLetter.length){
       win.style.display = 'flex';
+      resetGame();
     } else  {
       if(missed === 5) {
           lost.style.display = 'flex';
+          resetGame();
       }
+    }
+  }
+
+  function resetGame() {
+    // reset missed varaible
+    missed = 0;
+    // remove the previous phrase
+    list.innerHTML = " ";
+    // generate a new phrase
+    addPhraseToDisplay(getRandomPhraseAsArray(phrases));
+    // find lost hearts and replace them into live hearts
+    for(let i = 0; i < tries.length; i += 1){
+      tries[i].querySelector('img').setAttribute('src','images/liveHeart.png');
+    }
+    // remove chosen class from the buttons and set disabled to false
+    let chosenKeys = qwerty.querySelectorAll('.chosen');
+    for(let j = 0; j < chosenKeys.length; j += 1){
+      chosenKeys[j].classList.remove("chosen");
+      chosenKeys[j].disabled = false;
     }
   }
 

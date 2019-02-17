@@ -190,3 +190,10 @@ button {
 .lose a {
   color: var(--color-lose);
 }
+
+.show {
+  font-weight: bold;
+  /* add animation for guessed letters */
+  transform: rotateY(360deg);
+  transition: transform 900ms ease-in-out;
+}
