@@ -10,19 +10,21 @@ document.addEventListener("DOMContentLoaded", () => {
   'enjoy today',
   'never stop dreaming'
   ];
-  const overlay = document.getElementById('overlay');
+  const start = document.getElementById('overlay');
+  const win =  document.getElementById('overlay-win');
+  const lost =  document.getElementById('overlay-lost');
   // keeps track of the number of guesses the player has missed
   let missed = 0;
 
-  // OVERLAY
-  overlay.addEventListener('click', (e) => {
+  // START OVERLAY
+  start.addEventListener('click', (e) => {
     if(e.target.tagName === 'A'){
         // hide the screen overlay
-        overlay.style.display = 'none';
+        start.style.display = 'none';
     }
   });
 
-  overlay.addEventListener('mouseover', (e) => {
+  start.addEventListener('mouseover', (e) => {
     if(e.target.tagName === 'A'){
         // change the cursor into pointer
         e.target.style.cursor = 'pointer';
@@ -66,22 +68,26 @@ document.addEventListener("DOMContentLoaded", () => {
   addPhraseToDisplay(phraseArray);
 
   qwerty.addEventListener('click', (e) => {
-    // store the chosen letter
-    let letterFound = e.target;
+    if(e.target.tagName === 'BUTTON'){
+      // store the chosen letter
+      let letterFound = e.target;
 
-    // when a player chooses a letter that doesnt have class named letter...
-    if(letterFound.className !== 'chosen'){
-      // add the “chosen” class to that button so the same letter can’t be chosen twice
-      letterFound.className = 'chosen';
-      // disable the button
-      letterFound.setAttribute("disabled", true);
-    }
-    // pass the clicked letter
-    if(checkLetter(letterFound) === null) {
-      // increase missed by 1
-      missed += 1;
-      // change live hearts into lost hearts
-      tries[missed - 1].querySelector('img').setAttribute('src','images/lostHeart.png');
+      // when a player chooses a letter that doesnt have class named letter...
+      if(letterFound.className !== 'chosen'){
+        // add the “chosen” class to that button so the same letter can’t be chosen twice
+        letterFound.className = 'chosen';
+        // disable the button
+        letterFound.setAttribute("disabled", true);
+      }
+      // pass the clicked letter
+      if(checkLetter(letterFound) === null) {
+        // increase missed by 1
+        missed += 1;
+        // change live hearts into lost hearts
+        tries[missed - 1].querySelector('img').setAttribute('src','images/lostHeart.png');
+      }
+
+      checkWin();
     }
   });
 
@@ -105,7 +111,19 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // each time the player guesses a letter, the function checks whether the game has been won or lost
   function checkWin() {
+    const numOfShow = document.querySelectorAll('.show');
+    const numOfLetter = document.querySelectorAll('.letter');
 
+    console.log(numOfShow);
+    console.log(numOfLetter);
+    // check if the number of letters with class “show” is equal to the number of letters with class “letters”
+    if(numOfShow.length === numOfLetter.length){
+      win.style.display = 'flex';
+    } else  {
+      if(missed === 5) {
+          lost.style.display = 'flex';
+      }
+    }
   }
 
 });

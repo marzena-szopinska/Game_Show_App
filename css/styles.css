@@ -135,6 +135,34 @@ button {
   border-radius: 5px;
 }
 
+#overlay-win {
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  color: #FFFFFF;
+  justify-content: center;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  border-radius: 5px;
+  display: none;
+}
+
+#overlay-lost {
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  color: #FFFFFF;
+  justify-content: center;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  border-radius: 5px;
+  display: none;
+}
+
 .title {
   color: #FFF;
 }
