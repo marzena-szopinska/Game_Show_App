@@ -53,17 +53,48 @@ document.addEventListener("DOMContentLoaded", () => {
       if(letter.textContent !== " "){
         letter.className = "letter";
       }
+      else {
+        letter.className = "space";
+      }
       // append that list item to the #phrase ul in your HTML
       list.appendChild(letter);
     }
-
   }
 
   const phraseArray = getRandomPhraseAsArray(phrases);
   addPhraseToDisplay(phraseArray);
 
-  function checkLetter(letter) {
+  qwerty.addEventListener('click', (e) => {
+    // store the chosen letter
+    let letterFound = e.target;
 
+    // when a player chooses a letter that doesnt have class named letter...
+    if(letterFound.className !== 'chosen'){
+      // add the “chosen” class to that button so the same letter can’t be chosen twice
+      letterFound.className = 'chosen';
+      // disable the button
+      letterFound.setAttribute("disabled", true);
+    }
+    // pass the clicked letter
+    checkLetter(letterFound);
+  });
+
+  function checkLetter(pickedKey) {
+    let letter = null;
+    // get all of the elements with a class of “letter”
+    let letters = document.querySelectorAll('.letter');
+    // loop over the letters and check if they match the letter in the button the player has chosen
+    for(let i = 0; i < letters.length; i += 1) {
+      // if there’s a match
+      if(pickedKey.textContent === letters[i].textContent){
+        // add the “show” class to the list item containing that letter
+        // and store the matching letter inside of a variable, and return that letter
+        letters[i].className += " " + "show";
+        //const letter = letters[i];
+        letter = letters[i];
+      }
+    }
+    return letter;
   }
 
   // each time the player guesses a letter, the function checks whether the game has been won or lost
